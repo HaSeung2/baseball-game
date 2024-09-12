@@ -142,7 +142,7 @@ public class GameMethod{
                 if(randomNumber.get(i).equals(userInputList.get(j))){
                     //이 if문을 들어와서 그 일치하는 값이 자릿수까지도 일치하는지 확인후  
                     if(randomNumber.get(i).equals(userInputList.get(i))){
-                        // 자릿수도 일치하면 스트라이크 값 증가
+                    // 자릿수도 일치하면 스트라이크 값 증가
                         strike++;
                     }
                     // 아니라면 볼 값 증가

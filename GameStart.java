@@ -37,7 +37,7 @@ public class GameStart {
                         // if문으로 빈 문자열인지 확인하고 아니라면 난수의 길이를 랜덤 숫자의 자릿수를 저장해두는
                         // randomDigits에 set.
                         randomNumber = game.createChoiceRandomNumber(userChoiceDigits);
-                        if(randomNumber != ""){
+                        if(!randomNumber.isEmpty()){
                             game.setRandomDigits(randomNumber.length());
                         }
                         System.out.println("< 게임을 시작합니다 >");
