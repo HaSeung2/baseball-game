@@ -3,7 +3,6 @@ package baseBallGame;
 import baseBallGame.exception.BadInputException;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 public class GameMethod{
@@ -53,35 +52,15 @@ public class GameMethod{
         result.clear();
     }
 
-    // 자리수를 따로 설정하지 않고 실행했을때 기본적인 3자리수 랜덤 난수 생성
-    public String createRandomNumber(){
-        HashSet <String> numbers = new HashSet<>();
-        String finalNumber = "";
-
-        // Set 컬렉션에는 중복값이 저장되지 않는다.
-        // 그래서 while문으로 돌리면서
-        // if문으로 Set의 길이가 유저가 입력한 자릿수와 일치한다면
-        // break로 while문 탈출.
-        while(true){
-            numbers.add(ThreadLocalRandom.current().nextInt(1,10)+"");
-            if(numbers.size() == 3){
-                break;
-            }
-        }
-        Iterator <String> iter = numbers.iterator();
-        for(int i = 0; i < numbers.size(); i++){
-            finalNumber += iter.next();
-        }
-        return finalNumber;
-    }
-
     // 유저가 자릿수를 입력했을 때 그 입력한 값을 받아서 그 값만큼의 자릿수를 가진 랜덤 숫자 생성하는 메서드
     public String createChoiceRandomNumber(String userChoiceNumber) throws Exception{
         String finalNumber = "";
         int userNumber = Integer.parseInt(userChoiceNumber);
         if(Pattern.matches(numberReg, userChoiceNumber) && (userNumber <= 5 && userNumber >= 3)){
             setRandomDigits(userNumber);
-            // 셔플을 이용하여 랜덤 숫자 생성
+            // Collections.shuffle로 배열의 값을 랜덤으로 뒤 섞은 후
+            // subString을 이용하여 0번째부터 유저가 입력한 자릿수만큼의 수를 잘라내어 다시 num에 대입
+            // 그 후 for문을 돌리면서 finerNumer에 하나하나 쌓음.
             List <String> num = new ArrayList<>();
             for(int i = 1; i < 10; i++){
                 num.add(i+"");
@@ -111,18 +90,15 @@ public class GameMethod{
                   userInputList.add(userInput.substring(i, i+1));
                   randomList.add(randomNumber.substring(i, i+1));
             }
-            strikeCount =  strikeCnt(randomList,userInputList);
-            ballCount = ballCnt(randomList,userInputList);
+            List <Integer> count = strikeAndBallCnt(randomList,userInputList);
+            strikeCount = count.get(0);
+            ballCount = count.get(1);
             // 스트라이크의 갯수가 자릿수보다 작다면 정답을 맞추지 못했다는 것을 의미.
             if(strikeCount < randomDigits){
                 // 스트라이크의 갯수를 저장.
                 setStrike(strikeCount);
                if(ballCount >= 0){
-                   // 볼 카운트는 이중 for문으로 돌면서 하나하나 다 검사를 하기 때문에
-                   // 볼카운트 안에는 스트라이크 카운트도 같이 들어있다.
-                   // 그래서 볼 카운트에 스트라이크 갯수를 빼면서 대입한다.
-                   ballCount -= strikeCount;
-                   // 그 볼 갯수를 저장.
+                   // 볼 갯수 저장
                    setBall(ballCount);
                }
             }
@@ -155,27 +131,33 @@ public class GameMethod{
         return numbers.size() == randomDigits;
     }
 
-    // 스트라이크 갯수 구하는 메서드
-    public int strikeCnt(List<String> randomNumber, List<String>userInputList){
+    // 스트라이크, 볼 갯수 구하는 메서드
+    public List <Integer> strikeAndBallCnt(List<String> randomNumber, List<String>userInputList){
+        int ball = 0;
         int strike = 0;
         for(int i = 0; i < randomNumber.size(); i++){
-            if(randomNumber.get(i).equals(userInputList.get(i))){
-                strike++;
-            }
-        }
-        return strike;
-    }
-
-    // 볼 갯수 구하는 메서드
-    public int ballCnt(List<String> randomNumber, List<String>userInputList){
-        int ball = 0;
-        for(int i = 0; i < randomNumber.size(); i++){
             for(int j = 0; j < userInputList.size(); j++){
+                // 랜덤 숫자 배열의 각방마다 유저가 입력한 값을 하나 씩 넣은 배열의 0번부터 자릿수길이만큼 돌면서
+                // 일치하는게 있다면
                 if(randomNumber.get(i).equals(userInputList.get(j))){
-                    ball++;
+                    //이 if문을 들어와서 그 일치하는 값이 자릿수까지도 일치하는지 확인후  
+                    if(randomNumber.get(i).equals(userInputList.get(i))){
+                        // 자릿수도 일치하면 스트라이크 값 증가
+                        strike++;
+                    }
+                    // 아니라면 볼 값 증가
+                    else{
+                        ball++;
+                    }
                 }
             }
         }
-        return ball;
+        // for문이 끝나고 나면 리스트를 만들어서
+        List <Integer> strikeAndBallCnt = new ArrayList<>();
+        // 리스트의 스트라이크와 볼의 갯수 저장 후
+        strikeAndBallCnt.add(strike);
+        strikeAndBallCnt.add(ball);
+        // 리스트 리턴
+        return strikeAndBallCnt;
     }
 }

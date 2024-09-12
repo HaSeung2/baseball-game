@@ -21,11 +21,8 @@ public class GameStart {
             if (num == 0) {
                 // 자리수 설정하기를 선택하지않고
                 // 게임 시작하기로 게임을 시작할 때를 대비하여
-                // 랜덤 숫자의 자릿수를 저장하는 randomDigits에 미리 3을 담아서
-                game.setRandomDigits(3);
                 // 3자릿수 난수를 미리 한개 생성해둔다.
-                randomNumber = game.createRandomNumber();
-
+                randomNumber = game.createChoiceRandomNumber("3");
                 System.out.println("환영합니다 ! 원하시는 번호를 입력해주세요");
                 System.out.print("0. 자리수 설정하기 1. 게임 시작하기  2. 게임 기록 보기  3. 종료하기 : ");
                 String choiceNumber = sc.nextLine();
@@ -71,7 +68,7 @@ public class GameStart {
                         System.out.println("또 이용해주세요 !");
                         return true;
                         // 0 ~ 4 이외에 것들을 입력하면 예외처리
-                    default: throw new BadInputException("숫자를 0 ~ 4까지 다시 입력해주세요");
+                    default: throw new BadInputException("숫자를 0 ~ 3까지 다시 입력해주세요");
                 }
                 // 테스트하기위해 만들어진 랜덤 숫자가 뭔지 sout으로 출력
                 System.out.println(randomNumber);
