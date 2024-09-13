@@ -13,16 +13,9 @@ public class GameMethod{
     private int ball;
     private int randomDigits;
 
-    public void setStrike(int strike){
-        this.strike = strike;
-    }
 
     public void setReplayCnt(int replayCnt){
         this.replayCnt.add(replayCnt);
-    }
-
-    public void setBall(int ball){
-        this.ball = ball;
     }
 
     public void setRandomDigits(int randomDigits){
@@ -39,9 +32,6 @@ public class GameMethod{
 
     public int getBall(){
         return ball;
-    }
-    public void setResult(int result){
-        this.result.add(result);
     }
 
     public ArrayList <Integer> getResult(){
@@ -96,15 +86,13 @@ public class GameMethod{
             // 스트라이크의 갯수가 자릿수보다 작다면 정답을 맞추지 못했다는 것을 의미.
             if(strikeCount < randomDigits){
                 // 스트라이크의 갯수를 저장.
-                setStrike(strikeCount);
-               if(ballCount >= 0){
-                   // 볼 갯수 저장
-                   setBall(ballCount);
-               }
+                this.strike = strikeCount;
+                // 볼 갯수 저장
+                this.ball = ballCount;
             }
             else{
                 // 정답이라면 만들어둔 리스트의 저장 해주면서 true 리턴.
-                setResult(Integer.parseInt(userInput));
+                this.result.add(Integer.parseInt(userInput));
                 return true;
             }
         }
@@ -133,8 +121,8 @@ public class GameMethod{
 
     // 스트라이크, 볼 갯수 구하는 메서드
     public List <Integer> strikeAndBallCnt(List<String> randomNumber, List<String>userInputList){
-        int ball = 0;
-        int strike = 0;
+        ball = 0;
+        strike = 0;
         for(int i = 0; i < randomNumber.size(); i++){
             for(int j = 0; j < userInputList.size(); j++){
                 // 랜덤 숫자 배열의 각방마다 유저가 입력한 값을 하나 씩 넣은 배열의 0번부터 자릿수길이만큼 돌면서
