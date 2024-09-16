@@ -1,8 +1,9 @@
-package baseBallGame;
+package baseBallGame.console;
 
-import baseBallGame.exception.BadInputException;
+import baseBallGame.console.exception.BadInputException;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 public class GameMethod{
@@ -41,6 +42,31 @@ public class GameMethod{
     public void resultClear(){
         result.clear();
     }
+
+//       hashSet과 Iterator을 이용한 난수 생성
+//    public String createRandomNumber(String userChoiceNumber) throws Exception{
+//        String createRandomNum = "";
+//        int userChoiceNumberLength = Integer.parseInt(userChoiceNumber);
+//        HashSet <String> hs = new HashSet<>();
+//        if(Pattern.matches(numberReg, userChoiceNumber) && (userChoiceNumberLength <= 5 && userChoiceNumberLength >= 3)){
+//            setRandomDigits(userChoiceNumberLength);
+//            while(true){
+//                int num = ThreadLocalRandom.current().nextInt(1,10);
+//                hs.add(String.valueOf(num));
+//                if(hs.size() == userChoiceNumberLength){
+//                    break;
+//                }
+//            }
+//            Iterator <String> it = hs.iterator();
+//            while(it.hasNext()){
+//                createRandomNum += it.next();
+//            }
+//        }
+//        else{
+//            throw new BadInputException("3, 4, 5중에 입력 했나요 ?");
+//        }
+//        return createRandomNum;
+//    }
 
     // 유저가 자릿수를 입력했을 때 그 입력한 값을 받아서 그 값만큼의 자릿수를 가진 랜덤 숫자 생성하는 메서드
     public String createChoiceRandomNumber(String userChoiceNumber) throws Exception{

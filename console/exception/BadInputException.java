@@ -1,4 +1,4 @@
-package baseBallGame.exception;
+package baseBallGame.console.exception;
 
 public class BadInputException extends Exception{
     public BadInputException(String e) {

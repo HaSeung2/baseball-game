@@ -1,6 +1,6 @@
-package baseBallGame;
+package baseBallGame.console;
 
-import baseBallGame.exception.BadInputException;
+import baseBallGame.console.exception.BadInputException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -74,6 +74,10 @@ public class GameStart {
             }
             System.out.print("숫자를 입력하세요 : ");
             String userInput = sc.nextLine();
+            if(userInput.contains("0")){
+                System.out.println("0은 입력하시면 안돼요 ~");
+                continue;
+            }
             // 정답을 맞췄을 때만 true를 리턴 하게 해뒀기 때문에
             // 이 if문 안에 들어간다면 정답을 맞췄을 때 뿐이다.
             if (game.filterNum(randomNumber,userInput)) {
