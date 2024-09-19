@@ -9,6 +9,7 @@ public class GameStart {
     private int num = 0;
     private int replayCnt = 0;
     private String randomNumber = "";
+    private String userChoiceDigits;
     private final GameMethod game = new GameMethod();
 
     public boolean gameStart() throws Exception {
@@ -19,10 +20,6 @@ public class GameStart {
             // 정상적으로 입력을 잘 하여 게임이 시작되면 num을 num++;로 증가 시켜줘서
             // 문제를 맞추기 전까지는 이 if문 안의 코드들은 실행되지 않는다.
             if (num == 0) {
-                // 자리수 설정하기를 선택하지않고
-                // 게임 시작하기로 게임을 시작할 때를 대비하여
-                // 3자릿수 난수를 미리 한개 생성해둔다.
-                randomNumber = game.createChoiceRandomNumber("3");
                 System.out.println("환영합니다 ! 원하시는 번호를 입력해주세요");
                 System.out.print("0. 자리수 설정하기 1. 게임 시작하기  2. 게임 기록 보기  3. 종료하기 : ");
                 String choiceNumber = sc.nextLine();
@@ -32,20 +29,15 @@ public class GameStart {
                     // 입력 받은 숫자를  createChoiceRandomNumber() 메서드를 호출하며 전달.
                     case "0":
                         System.out.print("3, 4, 5자릿수 중에 골라주세요 ~ : ");
-                        String userChoiceDigits = sc.nextLine();
+                        userChoiceDigits = sc.nextLine();
                         // 3, 4, 5 중에 입력을 잘 했다면 randomNumber에 만들어온 난수가 잘 담겨있을 것이기 때문에
                         // if문으로 빈 문자열인지 확인하고 아니라면 난수의 길이를 랜덤 숫자의 자릿수를 저장해두는
                         // randomDigits에 set.
                         randomNumber = game.createChoiceRandomNumber(userChoiceDigits);
-                        if(!randomNumber.isEmpty()){
-                            game.setRandomDigits(randomNumber.length());
-                        }
-                        System.out.println("< 게임을 시작합니다 >");
-                        System.out.println("중복 숫자 없는 "+userChoiceDigits+" 자릿수 맞추기 ! ");
                         break;
                     case "1":
-                        System.out.println("< 게임을 시작합니다 >");
-                        System.out.println("중복 숫자 없는 3자릿수 맞추기 !");
+                        randomNumber = game.createChoiceRandomNumber("3");
+                        userChoiceDigits = "3";
                         break;
                     case "2":
                         int resultNumber = 1;
@@ -61,6 +53,7 @@ public class GameStart {
                         }
                         continue;
                     case "3":
+                        // 게임 결과들을 저장해두었던 리스트를 비워 주면서 게임 종료
                         game.resultClear();
                         System.out.println("< 숫자 야구 게임을 종료합니다 >");
                         System.out.println("또 이용해주세요 !");
@@ -69,6 +62,8 @@ public class GameStart {
                     default: throw new BadInputException("숫자를 0 ~ 3까지 다시 입력해주세요");
                 }
                 // 테스트하기위해 만들어진 랜덤 숫자가 뭔지 sout으로 출력
+                System.out.println("< 게임을 시작합니다 >");
+                System.out.println("중복 숫자 없는 "+userChoiceDigits+" 자릿수 맞추기 ! ");
                 System.out.println(randomNumber);
                 num++;
             }
@@ -95,20 +90,13 @@ public class GameStart {
             // 출력문으로 출력
             int strike = game.getStrike();
             int ball = game.getBall();
-            if (strike > 0 && ball > 0) {
+            if (strike > 0 || ball > 0) {
                 System.out.println(strike + " 스트라이크 " + ball + " 볼");
-                replayCnt++;
-            } else if (strike > 0 && ball == 0) {
-                System.out.println(strike + " 스트라이크");
-                replayCnt++;
-            } else if (strike == 0 && ball > 0) {
-                System.out.println(ball + " 볼");
-                replayCnt++;
                 // 아무것도 맞추지 못했다면 아웃을 출력
             } else {
                 System.out.println("아웃");
-                replayCnt++;
             }
+            replayCnt++;
         }
         return false;
     }
