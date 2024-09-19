@@ -45,7 +45,7 @@ public class GameStart {
                         // 게임 결과를 저장해둔 result 리스트를 가져옴
                         ArrayList<Integer> result  = game.getResult();
                         // 매 게임마다 도전 횟수를 카운트해서 저장해둔 cnt 리스트를 가져옴.
-                        ArrayList<Integer> cnt =  game.getReplayCnt();;
+                        ArrayList<Integer> cnt =  game.getReplayCnt();
                         // for문을 돌면서 출력해준다.
                         for(int i = 0; i < result.size(); i++){
                             System.out.println(resultNumber +". "+result.get(i)+" / 도전 횟수 : "+cnt.get(i));

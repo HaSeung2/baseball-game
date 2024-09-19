@@ -4,8 +4,6 @@ import baseBallGame.console.exception.BadInputException;
 import baseBallGame.console.reg.Reg;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 
 public class GameMethod{
     private final ArrayList<Integer> result = new ArrayList<>();
