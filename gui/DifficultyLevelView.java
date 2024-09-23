@@ -65,13 +65,19 @@ public class DifficultyLevelView extends JFrame implements ActionListener {
 
         // 확인 버튼 클릭 시 이벤트
         okBtn.addActionListener(e->{
-            if(gameResultLog.isEmpty()){
-                new GameStartView(Integer.parseInt(userInputLb.getText()),new ArrayList<>());
-                this.dispose();
-                return;
+            if(userInputLb.getText().equals("")){
+                userInputLb.setText("자릿 수 입력 후 확인 버튼 눌러주세요");
+                userInputLb.setFont(new Font("맑은 고딕", Font.BOLD, 30));
             }
-            new GameStartView(Integer.parseInt(userInputLb.getText()),gameResultLog);
-            this.dispose();
+            else{
+                if(gameResultLog.isEmpty()){
+                    new GameStartView(Integer.parseInt(userInputLb.getText()),new ArrayList<>());
+                    this.dispose();
+                    return;
+                }
+                new GameStartView(Integer.parseInt(userInputLb.getText()),gameResultLog);
+                this.dispose();
+            }
         });
         setVisible(true);
     }

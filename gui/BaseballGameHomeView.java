@@ -49,7 +49,6 @@ public class BaseballGameHomeView extends JFrame implements ActionListener {
             btnPl.add(btn[i]);
             btn[i].addActionListener(this);
         }
-
         titleLbPl.add(titleLb);
         titleLbPl.setSize(300, 300);
         add(titleLbPl);

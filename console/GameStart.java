@@ -33,10 +33,12 @@ public class GameStart {
                         // 3, 4, 5 중에 입력을 잘 했다면 randomNumber에 만들어온 난수가 잘 담겨있을 것이기 때문에
                         // if문으로 빈 문자열인지 확인하고 아니라면 난수의 길이를 랜덤 숫자의 자릿수를 저장해두는
                         // randomDigits에 set.
-                        randomNumber = game.createChoiceRandomNumber(userChoiceDigits);
+                        if(game.checkingNumber(userChoiceDigits)){
+                            randomNumber = game.createRandomNumber(userChoiceDigits);
+                        }
                         break;
                     case "1":
-                        randomNumber = game.createChoiceRandomNumber("3");
+                        randomNumber = game.createRandomNumber("3");
                         userChoiceDigits = "3";
                         break;
                     case "2":
@@ -75,15 +77,17 @@ public class GameStart {
             }
             // 정답을 맞췄을 때만 true를 리턴 하게 해뒀기 때문에
             // 이 if문 안에 들어간다면 정답을 맞췄을 때 뿐이다.
-            if (game.filterNum(randomNumber,userInput)) {
-                System.out.println("정답 입니다.");
-                replayCnt++;
-                game.setReplayCnt(replayCnt);
-                // 맨 위에 if문으로 다시 들어가게 하기 위해 num의 값을 0으로 초기화,
-                // 도전 횟수를 카운트해둔 replayCnt도 0으로 초기화해준다.
-                replayCnt = 0;
-                num = 0;
-                break;
+            if (game.filterNum(userInput)) {
+                if(game.ballAndStrikeCheck(randomNumber,userInput)){
+                    System.out.println("정답 입니다.");
+                    replayCnt++;
+                    game.setReplayCnt(replayCnt);
+                    // 맨 위에 if문으로 다시 들어가게 하기 위해 num의 값을 0으로 초기화,
+                    // 도전 횟수를 카운트해둔 replayCnt도 0으로 초기화해준다.
+                    replayCnt = 0;
+                    num = 0;
+                    break;
+                }
             }
             // 정답을 못 맞췄다면
             // 스트라이크 갯수와 볼 갯수를 가져와서
